@@ -1,0 +1,277 @@
+// 1. -----------   GENERAL MIXINS   ---------------
+// =================================================
+
+
+//A. EXTENDS
+// ==========
+
+// list reset
+// * use * - @extend %listreset;
+%listreset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// clearfix
+// * use * - @extend %clearfix;
+%clearfix {
+
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+// justify nav
+// * use * - @extend %justify;
+%justify {
+  text-align: justify;
+
+  > * {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  &:after {
+    content: '';
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+// transition
+// * use * - @extend %transition;
+%transition {
+  transition: all 0.3s linear;
+}
+
+
+//B. INCLUDES
+// ==========
+
+// TRANSFORMS
+// ============
+
+// generic transform
+// * use * - @include transform(scale(2, 0.5)), @include transform(translateX(10px) rotate(10deg) translateY(5px));
+@mixin transform($transforms) {
+  transform: $transforms;
+}
+
+// rotate
+// * use * - @include rotate(20);
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+// * use * - @include scale(1.2);
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// translate
+// * use * - @include translate(12px, 50%);
+@mixin translate ($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+// skew
+// * use * - @include skew(30, 20);
+@mixin skew ($x, $y) {
+  @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+//transform origin
+// * use * - @include transform-origin(100% 0);
+@mixin transform-origin ($origin) {
+  transform-origin: $origin;
+}
+
+// mixin for font face
+// * use * - @include font-face (icomoon, icomoon, normal, normal, '../fonts/icomoon/');
+@mixin font-face ($family, $name, $weight: normal, $style: normal, $url: '../fonts/') {
+  @font-face {
+    font-family: '$family';
+    src: url($url + $name + '.eot');
+    src: url($url + $name + '.eot?#iefix'),
+       url($url + $name + '.woff2') format('woff2'),
+       url($url + $name + '.woff') format('woff'),
+       url($url + $name + '.ttf') format('ttf'),
+       url($url + $name + '.svg') format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+// Align block inside parent with fixed height
+// * use * - @include v-align; or @include v-align(250px); or @include v-align(250px, bottom, before);
+@mixin v-align($va-height: 100%, $va-direction: middle, $va-pseudo: after) {
+  white-space: nowrap;
+  text-align: center;
+
+  &:#{$va-pseudo} {
+    content: '';
+    display: inline-block;
+    vertical-align: $va-direction;
+    width: 0;
+    min-height: $va-height;
+  }
+
+  > * {
+    white-space: normal;
+    display: inline-block;
+    vertical-align: $va-direction;
+    max-width: 99%;
+  }
+}
+
+// vertical align a pair of child inside parent
+// * use * - @include v-align-pair(image, text) or @include v-align-pair(image, text, bottom) or @include v-align-pair(image, text, middle, 200px);
+@mixin v-align-pair($child-name1, $child-name2, $valign: middle, $width1: auto, $width2: auto ) {
+  display: table;
+
+  .#{$child-name1}{
+    display: table-cell;
+    vertical-align: $valign;
+    width: $width1;
+  }
+
+  .#{$child-name2} {
+    display: table-cell;
+    vertical-align: $valign;
+    width: $width2;
+  }
+}
+
+// vertical align el
+// * use * - @include vertical-align-el;
+@mixin vertical-align-el {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/// Mixin helping defining both `width` and `height` simultaneously.
+// * use * - @include size(10em) or @include size(100%, 10em);
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// font-smothing
+// * use * - @include font-smoothing(on) or @include font-smoothing(off);
+@mixin font-smoothing($value:on){
+  @if $value == on{
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  @else{
+    -webkit-font-smoothing:subpixel-antialiased;
+    -moz-osx-font-smoothing:auto;
+  }
+}
+
+// Hides the text in an element, commonly used to show background image insted of text. Some elements will need block-level styles applied.
+// @link http://zeldman.com/2012/03/01/replacing-the-9999px-hack-new-image-replacement
+// * use * - @include hide-text;
+@mixin hide-text {
+  overflow: hidden;
+  text-indent: 101%;
+  white-space: nowrap;
+}
+
+// Creates a visual triangle with border
+// @author http://bourbon.io/docs/#triangle
+// $direction: up, down, left, right, up-right, up-left, down-right, down-left
+// * use * -  @include triangle(12px, gray, down) or @include triangle(12px 6px, gray blue, up-left);
+@mixin triangle($size, $color, $direction) {
+  $width: nth($size, 1);
+  $height: nth($size, length($size));
+  $foreground-color: nth($color, 1);
+  $background-color: if(length($color) == 2, nth($color, 2), transparent);
+  height: 0;
+  width: 0;
+
+  @if ($direction == up) or ($direction == down) or ($direction == right) or ($direction == left) {
+    $width: $width / 2;
+    $height: if(length($size) > 1, $height, $height/2);
+
+    @if $direction == up {
+      border-bottom: $height solid $foreground-color;
+      border-left: $width solid $background-color;
+      border-right: $width solid $background-color;
+    } @else if $direction == right {
+      border-bottom: $width solid $background-color;
+      border-left: $height solid $foreground-color;
+      border-top: $width solid $background-color;
+    } @else if $direction == down {
+      border-left: $width solid $background-color;
+      border-right: $width solid $background-color;
+      border-top: $height solid $foreground-color;
+    } @else if $direction == left {
+      border-bottom: $width solid $background-color;
+      border-right: $height solid $foreground-color;
+      border-top: $width solid $background-color;
+    }
+  } @else if ($direction == up-right) or ($direction == up-left) {
+    border-top: $height solid $foreground-color;
+
+    @if $direction == up-right {
+      border-left:  $width solid $background-color;
+    } @else if $direction == up-left {
+      border-right: $width solid $background-color;
+    }
+  } @else if ($direction == down-right) or ($direction == down-left) {
+    border-bottom: $height solid $foreground-color;
+
+    @if $direction == down-right {
+      border-left:  $width solid $background-color;
+    } @else if $direction == down-left {
+      border-right: $width solid $background-color;
+    }
+  } @else if ($direction == inset-up) {
+    border-color: $background-color $background-color $foreground-color;
+    border-style: solid;
+    border-width: $height $width;
+  } @else if ($direction == inset-down) {
+    border-color: $foreground-color $background-color $background-color;
+    border-style: solid;
+    border-width: $height $width;
+  } @else if ($direction == inset-right) {
+    border-color: $background-color $background-color $background-color $foreground-color;
+    border-style: solid;
+    border-width: $width $height;
+  } @else if ($direction == inset-left) {
+    border-color: $background-color $foreground-color $background-color $background-color;
+    border-style: solid;
+    border-width: $width $height;
+  }
+}
+
+/// Animate css properties
+// * use * -  @include animate(color) or @include animate(color width) or @include animate(color width, 1s, linear);
+$animation-speed: .3s !default;
+
+@mixin animate($properties, $duration: $animation-speed, $easing: ease-in-out) {
+  $list:();
+  @each $prop in $properties {
+    $str: #{$prop} #{$animation-speed} #{$easing};
+    $list: join($list, $str, comma);
+  }
+  transition: $list;
+}
+
+// placeholder mixin for form placeholders
+// * use * - @include placeholder{color: #000;}
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &::-moz-placeholder {opacity: 1; @content}
+  &:-moz-placeholder {@content}
+  &:-ms-input-placeholder {@content}
+  &.placeholder {@content}
+}

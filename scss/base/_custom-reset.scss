@@ -1,0 +1,109 @@
+// 1. --   DEFAULT VALUES FOR REQUIRED ELEMENTS   --
+// =================================================
+
+// Set color, background, font and other property in body
+body {
+  color: $base-text-color;
+  background: $base-background-color;
+  font: #{$base-font-size}/#{$base-line-height} $base-font-family;
+  min-width: $base-min-width;
+}
+
+// Set default link color and link hover color for anchor tag
+a {
+  color: $base-link-color;
+
+  &:hover {
+    color: $base-link-hover-color;
+  }
+}
+
+// Set margin for all paragraphs
+p {
+  margin: 0 0 $paragraph-bottom-margin;
+}
+
+// Set default styles for mark tag
+mark {
+  background: $mark-background;
+  color: $mark-color;
+}
+
+
+// 2. --------   HEADING RESET AND VALUES   --------
+// =================================================
+
+// Heading font, margin and color
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  color: $headings-color;
+  font-family: $headings-font-family;
+  font-weight: bold;
+  margin: 0 0 $heading-margin-bottom;
+}
+
+// Heading 1
+h1, .h1 {
+  font-size: $h1-font-size;
+}
+
+// Heading 2
+h2, .h2 {
+  font-size: $h2-font-size;
+}
+
+// Heading 3
+h3, .h3 {
+  font-size: $h3-font-size;
+}
+
+// Heading 4
+h4, .h4 {
+  font-size: $h4-font-size;
+}
+
+// Heading 5
+h5, .h5 {
+  font-size: $h5-font-size;
+}
+
+// Heading 6
+h6, .h6 {
+  font-size: $h6-font-size;
+}
+
+
+// 3. ----   FORM ELEMENT VALUES AND RESET   -------
+// =================================================
+
+// Form inputs style reset
+input[type='text'],
+input[type='tel'],
+input[type='email'],
+input[type='search'],
+input[type='password']
+textarea {
+  border: $form-input-border-width solid $form-element-border-color;
+  padding: $form-element-padding;
+  color: $form-element-color;
+  @include placeholder {
+    color: $placeholder-color;
+  }
+  
+  &:focus {
+    border-color: $form-element-focus-border-color;
+  }
+}
+
+// Form inputs and select style
+input,
+textarea,
+select {
+  font: 100% $base-font-family;
+  color: $base-form-text-color;
+  vertical-align: middle;
+}

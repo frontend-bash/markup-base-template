@@ -1,0 +1,71 @@
+// 1. ---------------   COLORS   -------------------
+// =================================================
+
+// colors from http://name-of-color.com ( use this site for custom colors )
+$black: #000;
+$white: #fff;
+$red: #f00;
+
+// Color reset for site  ( Add new as per design )
+$cocoa-brown: #312121;
+$gray: #999;
+$light-blue: #39f;
+
+
+// 2. -------   FONTS BORDERS AND OTHER   ----------
+// =================================================
+
+// Use fonts as needed
+$arial: 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
+$times: 'Times New Roman', 'Times', 'Baskerville', 'Georgia', serif;
+// $open-sans: 'Open Sans', 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
+
+// Base font family
+$base-font-sans-serif: $arial;
+$base-font-serif: $times;
+
+// Variable Declaration for body tag
+$base-font-family: $base-font-sans-serif !default;
+$base-font-size: 16px !default;
+$base-line-height: 1.2 !default;
+$base-text-color: $black !default;
+$base-background-color: $white !default;
+$base-min-width: 320px;
+
+// Link color and hover declaration
+$base-link-color: $light-blue;
+$base-link-hover-color: $black;
+
+// Paragraph bottom margin reset ** you can set in px too as per need
+$paragraph-bottom-margin: 1.2em;
+
+// Mark tag reset
+$mark-color: $white;
+$mark-background: $red;
+
+// Headings ** you can set in px too as per need
+$heading-margin-bottom: 1.2em;
+$headings-font-family: inherit !default;
+$headings-color: inherit !default;
+$h1-font-size: 30px !default;
+$h2-font-size: 27px !default;
+$h3-font-size: 24px !default;
+$h4-font-size: 21px !default;
+$h5-font-size: 17px !default;
+$h6-font-size: 15px !default;
+
+
+// 3. ------------   FORM ELEMENTS   ---------------
+// =================================================
+
+// Form element variables  ** you can set in px too as per need
+$btn-padding: 0.4em 0.7em !default;
+$form-input-border-width: 1px;
+
+// Form element variable declaration
+$form-element-padding: $btn-padding !default;
+$form-element-border-color: $gray !default;
+$form-element-focus-border-color: $black !default;
+$placeholder-color: $gray !default;
+$form-element-color: $gray !default;
+$base-form-text-color: $black;
